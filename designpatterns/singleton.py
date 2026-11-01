@@ -3,14 +3,15 @@ class Singleton:
 
   def __new__(cls):
     if cls._instance is None:
-      print("Instance creating")
+      print("creating the instance")
       cls._instance = super(Singleton, cls).__new__(cls)
+
     return cls._instance
 
+client1 = Singleton()
+client2 = Singleton()
+client3 = Singleton()
 
-cl1 = Singleton()
-cl2 = Singleton()
-cl3 = Singleton()
-
-print(cl1 is cl2)
-print(cl2 is cl3)
+print(client1)
+print(client2)
+print(client3)

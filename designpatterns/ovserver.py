@@ -1,22 +1,38 @@
-class Teacher:
-  def __init__(self, name):
-    self.name = name
-    self.students = []
+from abc import ABC, abstractmethod
+from __future__ import annotations
+from typing import List
+from random import randrange
 
-  def attach_students(self, student):
-    self.students.append(student)
-    print(f"{student.name} has been attached to {self.name}")
+class Subject(ABC):
 
-class Student:
-  def __init__(self, name):
-    self.teachers = []
-    self.name = name
+  @abstractmethod
+  def attach(self, observer: Observer) -> None:
+    pass
 
-  def add_teachers(self, teacher):
-    self.teachers.append(teacher)
-    teacher.attach_students(self)
+  @abstractmethod
+  def detach(self, observer: Observer) -> None:
+    pass
+
+  @abstractmethod
+  def notify(self) -> None:
+    pass
 
 
-teacher_fzn = Teacher("FZN")
-student_ryan = Student("Ryan")
-student_ryan.add_teachers(teacher_fzn)
+class ConcreteSubject(Subject):
+
+  _state : int = None
+  _observers: List[Observer] = []
+
+  def attach(self, observer: Observer) -> None:
+    print("Subject: Attached an observer")
+    self._observers.append(observer)
+
+  def detach(self, observer):
+    print("Subject: Detached an observer")
+    self._observers.remove(observer)
+
+  def notify(self):
+    print("Subject: Notifying observers")
+    for i in self._observers:
+      i.update(self)
+
